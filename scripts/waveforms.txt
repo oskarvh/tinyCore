@@ -1,0 +1,11 @@
+## CPU https://wavedrom.com/editor.html
+
+{signal: [
+  {name: 'clk', wave: 'p.........|...'},
+  {name: 'addr', wave: 'x.22222222|222', data: ['pc 0', 'addr 0','pc 1', 'addr 1','pc 2', 'addr 2']},
+  {name: 'data_i', wave: 'x.2.2.2.2.|...', data: ['data_i 0', 'data_i 1', 'data_i 2']},
+  {name: 'data_0', wave: 'x..2.2.2.2|...', data: ['data_o 0', 'data_o 1', 'data_o 2']},
+  {name: 'we', wave: 'x..1010101|...', },
+  {name: 'data_0', wave: 'x.34343434|3', data: ['FETCH', 'EXECUTE', 'FETCH', 'EXECUTE', 'FETCH', 'EXECUTE', 'FETCH', 'EXECUTE', 'FETCH']},
+],
+  config: {hscale : 2}}
