@@ -21,7 +21,7 @@
 
 
 // Butterfky for FFT module
-module seb_cpu_tb;	
+module tinycore_tb;	
 	localparam DATA_SZ = 16;
 	localparam ADDR_SZ = 16;
 	localparam RAM_SZ = 2**10;
@@ -53,6 +53,6 @@ module seb_cpu_tb;
 				#period;
 			end
 		
-		seb_mcu_top #()  seb_mcu_top ();
+		//seb_mcu_top #()  seb_mcu_top ();
 endmodule
 

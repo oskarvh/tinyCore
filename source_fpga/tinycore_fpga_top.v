@@ -176,10 +176,10 @@ input			CLK12M;
 
 	localparam RAM_ADDR_SZ = 8;
 	localparam RAM_DATA_SZ = 8;
-	localparam RAM_MEM_SZ =  2**10;
+	localparam RAM_MEM_SZ =  2**RAM_ADDR_SZ;
 
 	wire	ram_clk;
-	wire [RAM_ADDR_SZ-1:0] ram_add;
+	wire [RAM_ADDR_SZ-1:0] ram_addr;
 	wire [RAM_DATA_SZ-1:0] ram_data_i;
 	wire [RAM_DATA_SZ-1:0] ram_data_o;
 	wire  ram_we;
@@ -187,18 +187,18 @@ input			CLK12M;
 
 // CPU connections and parameters
 
-	localparam CPU_ADDR_SZ = 8;
-	localparam CPU_DATA_SZ = 8;
-	localparam CPU_MEM_SZ =  2**10;
+	localparam CPU_ADDR_SZ = RAM_ADDR_SZ;
+	localparam CPU_DATA_SZ = RAM_DATA_SZ;
+	localparam CPU_MEM_SZ =  RAM_MEM_SZ;
 
 	wire                   cpu_clk;
-	wire [CPU_ADDR_SZ-1:0] cpu_add;
+	wire [CPU_ADDR_SZ-1:0] cpu_addr;
 	wire [CPU_DATA_SZ-1:0] cpu_data_i;
 	wire [CPU_DATA_SZ-1:0] cpu_data_o;
 	wire                   cpu_we;
 
 	
-// Interconnect 
+//  ==============  Interconnect (Consider a bus here???) ===========================
 // CLK
 	assign RAM_CLK = CLK12M;
    assign CPU_CLK = CLK12M;
@@ -213,13 +213,17 @@ input			CLK12M;
 // WE
 	assign ram_we = cpu_we;
 	
+	
+	
+// ================= RAM 256 Byte (2^8 * DATA_SZ [Byes]) ============================
+	
 	ram #(.ADDR_SZ(RAM_ADDR_SZ),
 			.DATA_SZ(RAM_DATA_SZ),
 			.MEM_SZ(RAM_MEM_SZ)) 
 			
 	ram (
 		.clk(ram_clk),
-		.addr(ram_add),
+		.addr(ram_addr),
 		.data_i(ram_data_i),
 		.data_o(ram_data_o),
 		.we(ram_we)
@@ -228,10 +232,13 @@ input			CLK12M;
 		
 		
 		
+		
 	tinycore_top #(.ADDR_SZ(CPU_ADDR_SZ),
-			.DATA_SZ(CPU_ADDR_SZ)) 
+		.DATA_SZ(CPU_ADDR_SZ)) 
+			
 	cpu (
 		.clk(cpu_clk),
+		.reset_n(cpu_reset_n),
 		.data_i(cpu_data_i),
 		.data_o(cpu_data_o),
 		.addr(cpu_addr),

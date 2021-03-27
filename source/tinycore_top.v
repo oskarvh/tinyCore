@@ -27,12 +27,45 @@ module tinycore_top # (
 	(
 		
 	input  wire clk,
+	input  wire reset_n,
 	input  wire [DATA_SZ-1:0] data_i,
 	output wire [DATA_SZ-1:0] data_o,	
 	output wire [ADDR_SZ-1:0] addr,
 	output wire we
 );	
+	
+	reg state;      // Keep track of fetch/execute state
+	
+	reg [ADDR_SZ-1:0] pc;      // Program counter
+	reg [DATA_SZ-1:0] r[15:0]; // 15 general purpose registers
 
+// TopSM like? Then we use 2 steps: fetch and execute. I suggest we try to pipeline this 
+// This will require 2 ports ram
+	
+
+
+// FETCH: Fetch RAM(PC) insturction
+integer i;
+always @ (posedge clk or negedge reset_n) 
+	begin
+		if (reset_n == 0)
+			begin
+				state <= 1'b0;
+				pc <= 1'b0;
+				for (i = 0; i < 15; i=i+1) r[i] <= 0;
+			end // if
+		
+		else // clk
+			begin
+				pc <= 1;
+			end
+	end // always
+
+
+// EXECUTE: 
+	// Execute instruction
+	
+	// Update PC
 
 
 endmodule
