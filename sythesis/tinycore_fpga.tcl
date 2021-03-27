@@ -15,7 +15,7 @@
 
 # Quartus Prime: Generate Tcl File for Project
 # File: tinycore_fpga.tcl
-# Generated on: Sat Mar 27 14:01:06 2021
+# Generated on: Sat Mar 27 22:13:59 2021
 
 # Load Quartus Prime Tcl Project package
 package require ::quartus::project
@@ -54,15 +54,26 @@ if {$make_assignments} {
 	set_global_assignment -name NOMINAL_CORE_SUPPLY_VOLTAGE 1.2V
 	set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 	set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-	set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim (Verilog)"
-	set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
+	set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
+	set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
 	set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 	set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 	set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 	set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+	set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
+	set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH tinycore_tb -section_id eda_simulation
+	set_global_assignment -name EDA_TEST_BENCH_NAME tinycore_tb -section_id eda_simulation
+	set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id tinycore_tb
+	set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME tinycore_tb -section_id tinycore_tb
+	set_global_assignment -name VERILOG_FILE ../testbench/tinycore_tb.v
 	set_global_assignment -name VERILOG_FILE ../source/tinycore_top.v
 	set_global_assignment -name VERILOG_FILE ../source/ram.v
 	set_global_assignment -name VERILOG_FILE ../source_fpga/tinycore_fpga_top.v
+	set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_timing
+	set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_symbol
+	set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_signal_integrity
+	set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_boundary_scan
+	set_global_assignment -name EDA_TEST_BENCH_FILE ../testbench/tinycore_tb.v -section_id tinycore_tb
 	set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 
 	# Commit assignments
